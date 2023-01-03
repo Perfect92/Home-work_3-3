@@ -50,6 +50,7 @@ setInterval(() => {
 
 const modal = document.querySelector(".modal")
 const modalTrigger = document.querySelector(".btn_white")
+const modalTrigger2 = document.querySelector(".btn_dark")
 const closeModalBtn = document.querySelector(".modal__close")
 
 const openModal = () => {
@@ -60,13 +61,13 @@ const openModal = () => {
 }
 
 modalTrigger.addEventListener("click", openModal)
+modalTrigger2.addEventListener("click", openModal)
 
 const closeModal = () => {
     modal.classList.add("hide")
     modal.classList.remove("show")
     document.body.style.overflow = ""
 }
-
 let modalOpened = false
 window.onscroll = () => {
     if (document.documentElement.scrollTop >= 4000 && modalOpened === false) {
@@ -80,3 +81,49 @@ document.body.addEventListener('click', (e) => {
        closeModal();
    }
 });
+
+const message = {
+    loading: "Идет загрузка...",
+    success:"Спасибо, скоро свяжемся!!!",
+    fail:"Что-то пошло не так"
+}
+
+const forms = document.querySelectorAll("form ")
+
+const postData = (url, data ) => {
+    const res = fetch(url, {
+        method: "POST",
+        headers: {"Content-type":"appkication/json"},
+        body: data
+    })
+    return res
+}
+
+const bindPostData = (form) => {
+    form.addEventListener("submit", (e) =>{
+        e.preventDefault()
+
+        setTimeout( () => {
+            alert(message.loading)
+        }
+        ),1000
+
+        const formData = new FormData(form)
+        const object = {}
+
+        formData.forEach((item, i ) => {
+            const arr = [item, i]
+            console.log(arr)
+            object[i] = item
+        })
+        const json = JSON.stringify(object)
+
+        postData("server.php",json)
+             .then((data)=> console.log(data.status))
+             .catch((e)=> alert(message.fail))
+             .finally(()=> alert(message.success));
+        }
+    )}
+forms.forEach((item) => {
+    bindPostData(item)
+})
