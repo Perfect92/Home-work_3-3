@@ -187,6 +187,7 @@ a {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: all 0.6s ease-in-out;
 }
 
 .tabcontent__descr {
