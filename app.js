@@ -62,7 +62,6 @@ const openModal = () => {
 modalTrigger.addEventListener("click", openModal)
 modalTrigger2.addEventListener("click", openModal)
 
-
 const closeModal = () => {
     modal.classList.add("hide")
     modal.classList.remove("show")
